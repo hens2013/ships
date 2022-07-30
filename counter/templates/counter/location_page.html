@@ -1,0 +1,23 @@
+
+<form action="/shipsLocations/" method="get" style="margin: auto; width: 220px;">
+      {% csrf_token %}
+    <h3>Here you can get ships name by location</h3>
+    <br/>
+    <br/>
+     <label for="latitude_number">Enter Latitude: </label>
+    <input id="latitude_number"  name="latitude_number" required>
+    <br/>
+    <br/>
+     <label for="longitude_number">Enter Longitude: </label>
+    <input id="longitude_number"  name="longitude_number" required>
+    <br/>
+    <br/>
+     <label for="radios_number">Enter Radios: </label>
+    <input id="radios_number"  name="radios_number" required>
+    <br/>
+    <br/>
+    <input type="submit" value="OK">
+</form>
+
+
+

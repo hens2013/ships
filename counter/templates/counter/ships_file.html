@@ -1,0 +1,18 @@
+
+
+
+<form action="/get-ships-data/" method="get" style="margin: auto; width: 220px;">
+    <h3>Here you can get ships name</h3>
+    {% csrf_token %}
+    <label for="country_name">Enter Country: </label>
+    <br/>
+    <br/>
+    <input id="country_name" type="text" name="country_name"  required>
+    <br/>
+    <br/>
+    <input type="submit" value="OK">
+</form>
+
+
+
+
