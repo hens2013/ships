@@ -12,6 +12,7 @@ def get_data_url(url):
     return request
 
 
+# function take list and return str
 def list_str(data):
     return ', '.join(data)
 
@@ -28,6 +29,7 @@ def location_page(request):
     return render(request, 'counter/location_page.html')
 
 
+# function which return ships that in the circle that is being created with the point and the radius
 def ships_locations(request):
     if request.method == 'GET':
         response = None
@@ -38,26 +40,23 @@ def ships_locations(request):
             radios_number = float(request.GET['radios_number'])
             point_center = Point(x=latitude_number, y=longitude_number)
 
+            # get the ships data from the url
             URL = 'https://run.mocky.io/v3/367bedbd-5bf6-4d55-a659-2eb6e4f733a2'
-
-            # get the data from the url
-            # get the start points and the ships into two lists
             response = get_data_url(URL)
             records = response.json()['records']
             ship_list = {}
-
-            # get the ships which their location in the circle
+            # for loop which goes on all the records and calculate the ship location if it in the circle of the given location
             for record in records:
                 point1 = Point(x=record['position']['coordinates'][0], y=record['position']['coordinates'][1])
-                distance = point_center.calculate_distance(point1)
                 ship = record['ship']
-                if distance <= radios_number:
-                    # check if the ship record has name key
-                    if 'name' in ship.keys():
+                # check if the ship record has name key
+                if 'name' in ship.keys():
+                    distance = point_center.calculate_distance(point1)
+                    if distance <= radios_number:
                         ship_name = ship['name']
                         ship_list[ship_name] = distance
             if ship_list == {}:
-                raise HttpResponseNotFound('<h1>There are not ships</h1>')
+                return HttpResponseNotFound('<h1> There are no ships </h1>')
             else:
                 # sorted the ships according to the location
                 ship_list_distance = dict(sorted(ship_list.items(), key=lambda item: item[1]))
@@ -65,17 +64,16 @@ def ships_locations(request):
                 context = {'value': shis_commom_str}
 
             return render(request, 'counter/ships_display.html', context)
-
         except requests.exceptions.Timeout:
             return HttpResponseNotFound('<h1>' + str(response.status_code) + '</h1>')
         except  requests.ConnectionError:
             return HttpResponseNotFound('<h1>502 Bad Gateway server error response code</h1>')
         except  Exception as e:
-            return HttpResponseNotFound('<h1>' + str(e) + '</h1>')
+            return HttpResponseNotFound('<h1> ' + str(response.status_code) + '</h1>')
 
 
+# function that get country name and return all the ships that went out from the country
 def get_ships_data(request):
-    # if this is a POST request we need to process the form data
     if request.method == 'GET':
         response = None
         try:
@@ -97,11 +95,9 @@ def get_ships_data(request):
                 context = {'value': shis_commom_str}
 
             return render(request, 'counter/ships_display.html', context)
-
         except requests.exceptions.Timeout:
             return HttpResponseNotFound('<h1>' + str(response.status_code) + '</h1>')
         except  requests.ConnectionError:
             return HttpResponseNotFound('<h1>502 Bad Gateway server error response code</h1>')
-
         except  Exception:
-            return HttpResponseNotFound('<h1>500 internal server error</h1>')
+            return HttpResponseNotFound('<h1> ' + str(response.status_code) + '</h1>')
