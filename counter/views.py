@@ -89,7 +89,7 @@ def get_ships_data(request):
             ships_list = [record['ship']['name'] for record in data_dict['records'] if
                           record['ship']['country'] == country_name]
             if len(ships_list) == 0:
-                raise HttpResponseNotFound('<h1>There are not ships</h1>')
+                return HttpResponseNotFound('<h1> There are no ships </h1>')
             else:
                 shis_commom_str = list_str(ships_list)
                 context = {'value': shis_commom_str}
