@@ -2,6 +2,8 @@
 #for activate without docker
 git clone https://github.com/hens2013/ships.git
 
+cd ships
+
 python3 -m venv env
 
 source env/bin/activate
