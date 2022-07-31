@@ -17,7 +17,7 @@ python manage.py runserver
 navigate to the given url in the log
 
 
-#for activate with docker -> https://blog.logrocket.com/dockerizing-django-app/
+#for activate with docker
 git clone https://github.com/hens2013/ships.git
 
 cd ships
