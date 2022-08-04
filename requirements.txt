@@ -9,4 +9,4 @@ requests==2.27.0
 setuptools==56.0.0
 sqlparse==0.4.2
 urllib3==1.26.11
-django-rest-framework==0.1.0
+djangorestframework==3.12.2
